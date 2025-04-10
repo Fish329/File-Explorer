@@ -1,3 +1,61 @@
+def imgEdit():
+    print("----------")
+    print("FilExArtist V1.0")
+    print("Starting up...")
+    data=[]
+    for i in range(10):
+        data.append([" "," "," "," "," "," "," "," "," "," "])
+    while True:
+        itr=0
+        print(" 0123456789")
+        for i in range(10):
+            print(itr,end="")
+            for j in range(len(data[i])):
+                print(data[i][j],end="")
+            print("")
+            itr+=1
+        while True:
+            paintX=input("Input X value, or input X if you are finished drawing: ")
+            if paintX=="X":
+                print("----------")
+                for i in range(10):
+                    for j in range(len(data[i])):
+                        print(data[i][j],end="")
+                    print("")
+                input("Here's your drawing! press Enter to save and quit.")
+                print("----------")
+                return data
+            try:
+                int(paintX)
+            except:
+                print("ERROR: please insert a number or the letter X")
+                continue
+            paintX=int(paintX)
+            if paintX>9 or paintX<0:
+                print("ERROR: out of range")
+                continue
+            else:
+                break
+        while True:
+            paintY=input("Input Y value: ")
+            try:
+                int(paintY)
+            except:
+                print("ERROR: please insert a number")
+                continue
+            paintY=int(paintY)
+            if paintY>9 or paintY<0:
+                print("ERROR: out of range")
+                continue
+            else:
+                break
+        if data[paintY][paintX]==" ":
+            data[paintY][paintX]="█"
+        else:
+            data[paintY][paintX]=" "
+        print("----------------")
+    return
+
 class node:
     def __init__(self,data,children=[],parent=None):
         self.data=data
@@ -17,9 +75,17 @@ class node:
         else:
             print("No children")
         if self.data[0]=="txt":
-            print("- Text data:")
+            print("Text data:")
             for i in self.data[2:]:
                 print(i)
+            if self.data[2]=="":
+                print("[No text]")
+        if self.data[0]=="img":
+            print("Image data:")
+            for i in self.data[2]:
+                print("".join(i))
+            if self.data[2]=="":
+                print("[No Image]")
         print("Controls:")
         if self.children!=[]:
             print("D: view the details of a file")
@@ -99,11 +165,10 @@ class node:
                         print("File edited.")
                         print("----------")
                     else:
-                        print("Image editor is not implemented yet :(")
+                        self.data[2]=imgEdit()
                         print("----------")
                 self.details()
                 return
-
 
 print("FILE EXPLORER!")
 print("WARNING: when you exit the program, none of your files will be saved. Sorry :(")
